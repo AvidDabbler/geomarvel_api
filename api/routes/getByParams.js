@@ -14,12 +14,12 @@ const dataRequest = async (req, res)=>{
         }
 
         // split tree and condition parameters into lists
-        let conditionList = req.headers.condition ? req.headers.condition.split(',') : undefined
+        let conditionList = req.headers.condition ? req.headers.condition.toUpperCase().replace(/\s/g, '').split(',') : undefined
 
         // filter by tree condition
         if (conditionList) {
             trees.features.forEach(feature => {
-                if(conditionList.indexOf(feature.properties.CONDITION) >= 0) {
+                if(conditionList.indexOf(feature.properties.CONDITION.toUpperCase()) >= 0) {
                     tFiltered.features.push(feature)
                 }
             });
