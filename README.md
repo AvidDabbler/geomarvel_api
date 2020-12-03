@@ -12,6 +12,12 @@ The /getAll command will return all of the features from the geojson file.
 # /getByParams
 The /getAll command allows for the user to return a filtered set of trees based on the Condition of the trees. These conditions need to be passed in the header of the request as a string. If multiple tree conditions are needed they should be sent as a string separated by a comma is not space or case sensitive
 
+Condition Choices:
+- Exellent
+- Good
+- Fair
+- Poor
+
 ***Axios Example***
 ```
     var axios = require('axios');
