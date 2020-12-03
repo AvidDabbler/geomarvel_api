@@ -17,11 +17,11 @@ The /getAll command allows for the user to return a filtered set of trees based 
     var axios = require('axios');
 
     var config = {
-    method: 'get',
-    url: 'http://localhost:3000/getByParams',
-    headers: { 
-        'condition': 'good, Fair,POOR'
-    }
+        method: 'get',
+        url: 'http://localhost:3000/getByParams',
+        headers: { 
+            'condition': 'good, Fair,POOR'
+        }
     };
 
     axios(config)
