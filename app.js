@@ -23,14 +23,14 @@ const server = http.createServer((req, res) => {
         return;
     }
     console.log(url)
-    if(!url.startsWith('/trees') && !url.startsWith('/wards')){
+    if(!url.startsWith('/getAll') && !url.startsWith('/getByParams')){
         console.log('wrong url')
         return;
     }
-    else if (url.startsWith('/trees')) {
+    else if (url.startsWith('/getAll')) {
         trees.treeRequest(data)
     }
-    else if (url.startsWith('/wards')) {
+    else if (url.startsWith('/getByParams')) {
 
     }
     else{

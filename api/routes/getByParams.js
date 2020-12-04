@@ -4,12 +4,15 @@ const trees = require("../data/liquidambarTrees_DC.json");
 const geojson = require("../data/geojson.json");
 
 const dataRequest = async (req, res)=>{
-    
+    let query = req.query
+
+    console.log(query)
+
     const treeFilter = () => {
         let tFiltered = geojson;
 
         // kick out all features if tree or ward query not in header
-        if(!req.headers.condition && !req.headers.wards){
+        if(!req.headers.condition && !req.headers.wards) {
             return {error: "You need to use either the Wards or Condition parameter"};
         }
 
@@ -27,9 +30,7 @@ const dataRequest = async (req, res)=>{
 
         return tFiltered;
     }
-
-    res.send({trees: await treeFilter()});
-    
+    res.send(treeFilter());
 };
 
 /* GET home page. */
