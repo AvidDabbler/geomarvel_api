@@ -3,7 +3,8 @@ var router = express.Router();
 const trees = require("../data/liquidambarTrees_DC.json");
 
 const dataRequest = async (req, res)=>{
-    res.send({trees})
+    res.header('Access-Control-Allow-Origin', '*');
+    res.send(trees)
 };
 
 /* GET home page. */

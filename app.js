@@ -2,8 +2,6 @@ const http = require('http');
 
 const trees = require('./api/routes/data')
 
-const wardUrl = 'https://opendata.arcgis.com/datasets/0ef47379cbae44e88267c01eaec2ff6e_31.geojson'
-
 const server = http.createServer((req, res) => {
 
     const url = req.url;
