@@ -15,8 +15,8 @@ const dataRequest = async (req, res)=>{
 
     console.log(query)
 
-    const treeFilter = () => {
-        let tFiltered = geojson;
+    let tFiltered = geojson;
+    const treeFilter = async () => {
 
         // kick out all features if tree or ward query not in header
         if(CONDITION == '*' && WARD == '*') {
@@ -24,23 +24,39 @@ const dataRequest = async (req, res)=>{
         }
 
         // split tree and condition parameters into lists
-        let conditionList = CONDITION == "*" ? ["EXECELLENT","GOOD","FAIR","POOR"] : CONDITION.toUpperCase().replace(/\s/g, '').split(',');
-        let wardList = WARD == "*" ? ['1','2','3','4','5','6','7','8','9'] : WARD.toString().replace(/\s/g, '').split(',');
+        let conditionList = CONDITION.toUpperCase().replace(/\s/g, '').split(',');
+        let wardList = WARD.toString().replace(/\s/g, '').split(',');
 
+        console.log('Condition List: ', conditionList)
+        console.log('Ward List: ', wardList)
         // filter by tree condition
-        if (conditionList) {
-            trees.features.forEach(feature => {
-                if(conditionList.indexOf(feature.properties.CONDITION.toUpperCase()) >= 0) {
-                    if(wardList.indexOf(feature.properties.WARD.toString()) >= 0) {
-                        tFiltered.features.push(feature)
-                    }
-                }
-            });
-        }
-
-        return tFiltered;
+        tFiltered = geojson
+        
+        // trees.features.forEach(feature => {
+        //     if(conditionList == '*' || conditionList.indexOf(feature.properties.CONDITION.toUpperCase().replace(/\s/g, '')) >= 0) {
+        //         if(wardList == '*' || wardList.indexOf(feature.properties.WARD.toString()) >= 0) {
+        //             tFiltered.features.push(feature)
+        //         }
+        //     }
+        // });
+        tFiltered['features'] = await trees.features.filter(item=>{
+            let conditionCheck = CONDITION == '*' || conditionList.includes(item.properties.CONDITION.toUpperCase());
+            let wardCheck = WARD == '*' || conditionList.includes(item.properties.CONDITION.toUpperCase());
+            if(conditionCheck && wardCheck){
+                console.log('here')
+                return true
+            }
+            else{
+                return false
+            }
+        })
+        console.log('items returned: ', tFiltered.features.length)
+        return await tFiltered;
     }
-    res.send(treeFilter());
+    res.send(await treeFilter());
+    tFiltered = geojson
+    console.log('after: ', tFiltered.length)
+
 };
 
 /* GET home page. */
