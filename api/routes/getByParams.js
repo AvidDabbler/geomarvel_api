@@ -25,7 +25,7 @@ const dataRequest = async (req, res)=>{
 
         // split tree and condition parameters into lists
         let conditionList = CONDITION.toUpperCase().replace(/\s/g, '').split(',');
-        let wardList = WARD.toString().replace(/\s/g, '').split(',');
+        let wardList = WARD.replace(/\s/g, '').split(',');
 
         console.log('Condition List: ', conditionList)
         console.log('Ward List: ', wardList)
@@ -41,9 +41,9 @@ const dataRequest = async (req, res)=>{
         // });
         tFiltered['features'] = await trees.features.filter(item=>{
             let conditionCheck = CONDITION == '*' || conditionList.includes(item.properties.CONDITION.toUpperCase());
-            let wardCheck = WARD == '*' || conditionList.includes(item.properties.CONDITION.toUpperCase());
+            // needs a better way
+            let wardCheck = WARD == '*' || wardList.includes((item.properties.WARD).toString());
             if(conditionCheck && wardCheck){
-                console.log('here')
                 return true
             }
             else{
@@ -54,8 +54,7 @@ const dataRequest = async (req, res)=>{
         return await tFiltered;
     }
     res.send(await treeFilter());
-    tFiltered = geojson
-    console.log('after: ', tFiltered.length)
+    tFiltered = geojson;
 
 };
 
