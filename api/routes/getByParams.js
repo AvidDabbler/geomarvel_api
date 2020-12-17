@@ -10,8 +10,8 @@ const dataRequest = async (req, res)=>{
     console.log('CONDITION', req.query.CONDITION)
 
     let query = req.query;
-    let WARD = req.query.WARD ? req.query.WARD : '*' ;
-    let CONDITION = req.query.CONDITION ? req.query.CONDITION : '*' ;
+    let WARD = req.query.WARD ? req.query.WARD : ' ' ;
+    let CONDITION = req.query.CONDITION ? req.query.CONDITION : ' ' ;
 
     console.log(query)
 
@@ -32,13 +32,7 @@ const dataRequest = async (req, res)=>{
         // filter by tree condition
         tFiltered = geojson
         
-        // trees.features.forEach(feature => {
-        //     if(conditionList == '*' || conditionList.indexOf(feature.properties.CONDITION.toUpperCase().replace(/\s/g, '')) >= 0) {
-        //         if(wardList == '*' || wardList.indexOf(feature.properties.WARD.toString()) >= 0) {
-        //             tFiltered.features.push(feature)
-        //         }
-        //     }
-        // });
+        
         tFiltered['features'] = await trees.features.filter(item=>{
             let conditionCheck = CONDITION == '*' || conditionList.includes(item.properties.CONDITION.toUpperCase());
             // needs a better way
@@ -54,6 +48,8 @@ const dataRequest = async (req, res)=>{
         return await tFiltered;
     }
     res.send(await treeFilter());
+    
+    // reset with blank geojson object
     tFiltered = geojson;
 
 };
