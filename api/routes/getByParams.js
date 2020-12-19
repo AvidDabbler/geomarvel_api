@@ -1,5 +1,6 @@
 var express = require('express');
 var router = express.Router();
+const newLatLon = require('../functions/newLatLon');
 const trees = require("../data/liquidambarTrees_DC.json");
 const geojson = require("../data/geojson.json");
 
@@ -47,7 +48,7 @@ const dataRequest = async (req, res)=>{
         console.log('items returned: ', tFiltered.features.length)
         return await tFiltered;
     }
-    res.send(await treeFilter());
+    res.send(newLatLon.newLatLon(await treeFilter()));
     
     // reset with blank geojson object
     tFiltered = geojson;

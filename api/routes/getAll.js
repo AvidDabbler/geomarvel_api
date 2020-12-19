@@ -1,10 +1,13 @@
+
+const newLatLon = require('../functions/newLatLon');
 var express = require('express');
 var router = express.Router();
 const trees = require("../data/liquidambarTrees_DC.json");
 
 const dataRequest = async (req, res)=>{
     res.header('Access-Control-Allow-Origin', '*');
-    res.send(trees)
+
+    res.send(newLatLon.newLatLon(trees))
 };
 
 /* GET home page. */
