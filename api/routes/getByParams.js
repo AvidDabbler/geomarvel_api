@@ -1,6 +1,6 @@
 var express = require('express');
 var router = express.Router();
-const newLatLon = require('../functions/newLatLon');
+const utility = require('../functions/utility');
 const trees = require("../data/liquidambarTrees_DC.json");
 const geojson = require("../data/geojson.json");
 
@@ -48,7 +48,14 @@ const dataRequest = async (req, res)=>{
         console.log('items returned: ', tFiltered.features.length)
         return await tFiltered;
     }
-    res.send(newLatLon.newLatLon(await treeFilter()));
+    //add in lat lon to the properties panel for easy access to the ArcGIS API
+    let data = await utility.newLatLon(await treeFilter())
+    // sort by newest inspection
+    data = await utility.orderByInspectionDate(data) 
+    // format dates to MM/DD/YYYY
+    data = await utility.formatDates(data);
+
+    res.send(await data);
     
     // reset with blank geojson object
     tFiltered = geojson;
