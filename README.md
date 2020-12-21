@@ -44,3 +44,39 @@ The utility functions that were turned on for this API are contained in `api/fun
 - formatDates() - Formatting a list of dates from 
 
 All three of these utilities are run on each request and cannot be configured at this time
+
+
+# Deployment
+This app was deployed on AWS ec2.
+
+- create ec2
+- install dependencies
+
+Git
+```
+sudo yum install git
+```
+
+nodejs
+```
+curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.34.0/install.sh | bash
+. ~/.nvm/nvm.sh
+nvm install node
+```
+
+clone repo
+```
+git clone https://github.com/AvidDabbler/geomarvel_api.git
+```
+
+npm install
+```
+cd geomarvel_api/api
+npm install
+```
+
+crontab setup
+```
+crontab -e
+@reboot cd geomarvel_api/api && npm start
+```
