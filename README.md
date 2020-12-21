@@ -17,6 +17,7 @@ Condition Choices:
 - Good
 - Fair
 - Poor
+- Dead
 
 ***Axios Example***
 ```
@@ -24,10 +25,7 @@ Condition Choices:
 
     var config = {
         method: 'get',
-        url: 'http://localhost:3000/getByParams',
-        headers: { 
-            'condition': 'good, Fair,POOR'
-        }
+        url: 'http://localhost:3000/getByParams?CONDITION=Excellent,Poor,Dead&WARD=1,2,3,4,5,6,7,8,9',
     };
 
     axios(config)
@@ -38,3 +36,11 @@ Condition Choices:
     console.log(error);
     });
 ```
+
+# Utilities
+The utility functions that were turned on for this API are contained in `api/functions/utility.js`. There are three different functions contained in this file:
+- newLatLon() - Makes a copy of the feature's xy coordinates out from the geometry key and into the properties key so that they can be used in the arcgis layers popup as it pulls in that key by default. 
+- orderByInspectionDate() - A default sort to pull back the oldest last inspection date (feature.properties.CONDITIODT).
+- formatDates() - Formatting a list of dates from 
+
+All three of these utilities are run on each request and cannot be configured at this time
